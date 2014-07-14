@@ -1,14 +1,30 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
-import gtsoffenbach.nfcgamespieler_appprototype.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.View;
+
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Audio;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.FileIO;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.NFC;
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.GameAudio;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.GameFastRenderView;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.GameFileIO;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.GameGraphics;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.GameInput;
+import gtsoffenbach.nfcgamespieler_appprototype.util.SystemUiHider;
 
 
 /**
@@ -17,7 +33,7 @@ import android.view.View;
  *
  * @see SystemUiHider
  */
-public class FullscreenActivity extends Activity {
+public class FullscreenActivity extends Activity implements Game {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -29,18 +45,44 @@ public class FullscreenActivity extends Activity {
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (AUTO_HIDE) {
+                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            }
+            return false;
+        }
+    };
     /**
      * If set, will toggle the system UI visibility upon interaction. Otherwise,
      * will show the system UI visibility upon interaction.
      */
     private static final boolean TOGGLE_ON_CLICK = true;
-
     /**
      * The flags to pass to {@link SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
+    GameFastRenderView renderView;
+    Graphics graphics;
+    Audio audio;
+    Input input;
+    FileIO fileIO;
+    Screen screen = getInitScreen();
+    PowerManager.WakeLock wakeLock;
+    NFC nfc;
+    Handler mHideHandler = new Handler();
+    Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mSystemUiHider.hide();
+        }
+    };
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
@@ -113,6 +155,29 @@ public class FullscreenActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+
+        boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        int frameBufferWidth = isPortrait ? 800 : 1280;
+        int frameBufferHeight = isPortrait ? 1280 : 800;
+        Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
+                frameBufferHeight, Bitmap.Config.RGB_565);
+
+        float scaleX = (float) frameBufferWidth
+                / getWindowManager().getDefaultDisplay().getWidth();
+        float scaleY = (float) frameBufferHeight
+                / getWindowManager().getDefaultDisplay().getHeight();
+
+        renderView = new GameFastRenderView(this, frameBuffer);
+        graphics = new GameGraphics(getAssets(), frameBuffer);
+        fileIO = new GameFileIO(this);
+        audio = new GameAudio(this);
+        input = new GameInput(this, renderView, scaleX, scaleY);
+        screen = getInitScreen();
+        setContentView(renderView);
+
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
     }
 
     @Override
@@ -125,30 +190,6 @@ public class FullscreenActivity extends Activity {
         delayedHide(100);
     }
 
-
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
-
-    Handler mHideHandler = new Handler();
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
-
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -156,5 +197,55 @@ public class FullscreenActivity extends Activity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public Input getInput() {
+        return input;
+    }
+
+    @Override
+    public FileIO getFileIO() {
+        return fileIO;
+    }
+
+    @Override
+    public Graphics getGraphics() {
+        return graphics;
+    }
+
+    @Override
+    public Audio getAudio() {
+        return audio;
+    }
+
+    @Override
+    public NFC getNFC() {
+        return nfc;
+    }
+
+    @Override
+    public void setScreen(Screen screen) {
+        if (screen == null)
+            throw new IllegalArgumentException("Screen must not be null");
+
+        this.screen.pause();
+        this.screen.dispose();
+        screen.resume();
+        screen.update(0);
+        this.screen = screen;
+    }
+
+    @Override
+    public Screen getCurrentScreen() {
+
+        return screen;
+    }
+
+    @Override
+    public Screen getInitScreen() {
+
+
+        return screen; // default, weil kein InitScreen festgelegt, evtl ladebildschirm?
     }
 }
