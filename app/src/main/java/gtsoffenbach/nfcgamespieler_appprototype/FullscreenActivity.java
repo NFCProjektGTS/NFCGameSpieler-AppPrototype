@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Audio;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.FileIO;
@@ -91,8 +93,12 @@ public class FullscreenActivity extends Activity implements Game {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_fullscreen);
+
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
@@ -243,9 +249,14 @@ public class FullscreenActivity extends Activity implements Game {
     }
 
     @Override
-    public Screen getInitScreen() {
+    public Screen getInitScreen() { //TODO
 
 
         return screen; // default, weil kein InitScreen festgelegt, evtl ladebildschirm?
+    }
+
+    @Override
+    public void onBackPressed() {
+        getCurrentScreen().backButton();
     }
 }
