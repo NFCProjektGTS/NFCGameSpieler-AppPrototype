@@ -6,19 +6,17 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import gtsoffenbach.nfcgamespieler_appprototype.FullscreenActivity;
-
 /**
  * Created by Noli on 14.07.2014.
  */
 public class GameFastRenderView extends SurfaceView implements Runnable {
-    FullscreenActivity game;
+    AndroidGame game;
     Bitmap framebuffer;
     Thread renderThread = null;
     SurfaceHolder holder;
     volatile boolean running = false;
 
-    public GameFastRenderView(FullscreenActivity game, Bitmap framebuffer) {
+    public GameFastRenderView(AndroidGame game, Bitmap framebuffer) {
         super(game);
         this.game = game;
         this.framebuffer = framebuffer;
