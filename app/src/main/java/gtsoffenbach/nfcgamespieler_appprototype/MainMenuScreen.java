@@ -25,7 +25,7 @@ public class MainMenuScreen extends Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-                if (inBounds(event, 50, 350, 250, 450)) {
+                if (inBounds(event, 50, 50, 60, 60)) {
                     game.setScreen(new GameScreen(game));
                 }
 
@@ -46,6 +46,8 @@ public class MainMenuScreen extends Screen {
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
         g.drawImage(Assets.menu, 0, 0);
+
+
     }
 
     @Override
@@ -65,6 +67,5 @@ public class MainMenuScreen extends Screen {
     @Override
     public void backButton() {
         android.os.Process.killProcess(android.os.Process.myPid());
-
     }
 }

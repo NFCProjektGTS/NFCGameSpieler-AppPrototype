@@ -47,4 +47,5 @@ public class GameAudio implements Audio {
             throw new RuntimeException("Couldn't load sound '" + filename + "'");
         }
     }
+
 }

@@ -109,8 +109,6 @@ public class GameGraphics implements Graphics {
     @Override
     public void drawString(String text, int x, int y, Paint paint) {
         canvas.drawText(text, x, y, paint);
-
-
     }
 
 
@@ -129,6 +127,7 @@ public class GameGraphics implements Graphics {
 
         canvas.drawBitmap(((GameImage) Image).bitmap, srcRect, dstRect,
                 null);
+
     }
 
     @Override

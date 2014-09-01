@@ -1,5 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
+
 /**
  * Created by Noli on 05.08.2014.
  */
@@ -16,8 +18,8 @@ public class Background {
     public void update() {
         bgX += speedX;
 
-        if (bgX <= -2160) {
-            bgX += 4320;
+        if (bgX <= -AndroidGame.width) {
+            bgX += 2 * AndroidGame.width;
         }
     }
 

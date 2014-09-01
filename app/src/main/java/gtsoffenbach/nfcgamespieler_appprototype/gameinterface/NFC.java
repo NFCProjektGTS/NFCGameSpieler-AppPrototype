@@ -1,6 +1,6 @@
 package gtsoffenbach.nfcgamespieler_appprototype.gameinterface;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -13,20 +13,58 @@ import android.os.Parcelable;
  */
 public abstract class NFC {
     protected NfcAdapter mNfcAdapter;
-    protected Context caller;
+    protected Activity caller;
     protected Tag wTag;
-    protected boolean WriteMode = false;
     protected boolean enabled = false;
     protected IntentFilter[] mTagFilters;
     protected NdefMessage[] mCurrentNdef;
-    protected NdefMessage[] mWriteNdef;
-    protected String payload = "";
+    protected int NFCState;
+
+    public NfcAdapter getmNfcAdapter() {
+        return mNfcAdapter;
+    }
+
+    public void setmNfcAdapter(NfcAdapter mNfcAdapter) {
+        this.mNfcAdapter = mNfcAdapter;
+    }
+
+    public Tag getwTag() {
+        return wTag;
+    }
+
+    public void setwTag(Tag wTag) {
+        this.wTag = wTag;
+    }
+
+    public IntentFilter[] getmTagFilters() {
+        return mTagFilters;
+    }
+
+    public void setmTagFilters(IntentFilter[] mTagFilters) {
+        this.mTagFilters = mTagFilters;
+    }
+
+    public NdefMessage[] getmCurrentNdef() {
+        return mCurrentNdef;
+    }
+
+    public void setmCurrentNdef(NdefMessage[] mCurrentNdef) {
+        this.mCurrentNdef = mCurrentNdef;
+    }
+
+    public int getNFCState() {
+        return NFCState;
+    }
+
+    public void setNFCState(int NFCState) {
+        this.NFCState = NFCState;
+    }
 
     public abstract boolean isEnabled();
 
-    public abstract String getPayload();
-
-    public abstract void setPayload(String payload);
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public abstract void installService();
 
@@ -34,7 +72,7 @@ public abstract class NFC {
 
     public abstract boolean checkNFC();
 
-    public abstract void resolveIntent();
+    public abstract void resolveIntent(Intent intent);
 
     public abstract byte[] rawTagData(Parcelable parc);
 
@@ -42,15 +80,5 @@ public abstract class NFC {
 
     public abstract void printTag(NdefMessage[] msgs);
 
-    public abstract int writeTag(Tag tag, NdefMessage message);
-
-    public abstract void enableWrite();
-
-    public abstract void disableWrite();
-
-    public abstract void operate();
-
-    public abstract void createWriteNdef(NdefMessage[] messages);
-
-    public abstract void createWriteNdef(NdefMessage message);
+    public abstract void operate(NdefMessage[] msgs);
 }

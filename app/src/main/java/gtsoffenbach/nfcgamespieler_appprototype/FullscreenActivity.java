@@ -6,7 +6,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 public class FullscreenActivity extends AndroidGame {
 
 
-    private boolean firstrun;
+    private boolean firstrun = true;
 
     @Override
     public Screen getInitScreen() {

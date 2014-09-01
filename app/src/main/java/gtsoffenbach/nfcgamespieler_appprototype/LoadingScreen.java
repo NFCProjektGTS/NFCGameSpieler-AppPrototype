@@ -17,13 +17,14 @@ public class LoadingScreen extends Screen {
     @Override
     public void update(float deltaTime) {
         Graphics g = game.getGraphics();
-        Assets.menu = g.newImage("menu.png", ImageFormat.RGB565);
-        Assets.background = g.newImage("background.png", ImageFormat.RGB565);
+        Assets.menu = g.newImage("menu.jpg", ImageFormat.RGB565);
+        Assets.background = g.newImage("background.jpg", ImageFormat.RGB565);
 
-        Assets.button = g.newImage("button.jpg", ImageFormat.RGB565);
+        Assets.button = g.newImage("buttonStock1h_0.png", ImageFormat.RGB565);
+        Assets.button_pressed = g.newImage("buttonStock1d_1.png", ImageFormat.RGB565);
 
         //This is how you would load a sound if you had one.
-        Assets.click = game.getAudio().createSound("explode.ogg");
+        //Assets.click = game.getAudio().createSound("explode.ogg");
 
 
         game.setScreen(new MainMenuScreen(game));

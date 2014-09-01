@@ -5,4 +5,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="dialog_nfc">Ihr NFC scheint Deaktiviert zu sein, wollen sie es Aktivieren?</string>
+    <string name="dialog_nfc_off">Nicht Einschalten</string>
+    <string name="dialog_nfc_on">Einschalten</string>
+    <string name="dialog_nfc_title">NFC Deaktiviert!</string>
+
 </resources>

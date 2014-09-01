@@ -3,6 +3,7 @@ package gtsoffenbach.nfcgamespieler_appprototype;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Image;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input.TouchEvent;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 
 /**
  * Created by Noli on 05.08.2014.
@@ -22,10 +24,13 @@ public class GameScreen extends Screen {
 
     // Variable Setup
     int livesLeft = 1;
-    Paint paint, paint2;
+    Paint paint, paint2, paint3;
     private Image currentSprite;
     private Animation anim, hanim;
     private ArrayList tilearray = new ArrayList();
+    private BlinkingText text;
+    private ElementContainer container;
+    private UIButton firstbutton;
 
     public GameScreen(Game game) {
         super(game);
@@ -33,9 +38,7 @@ public class GameScreen extends Screen {
         // Initialize game objects here
 
         bg1 = new Background(0, 0);
-        bg2 = new Background(2160, 0);
-
-        currentSprite = anim.getImage();
+        bg2 = new Background(AndroidGame.width, 0);
 
         // Defining a paint object
         paint = new Paint();
@@ -44,12 +47,26 @@ public class GameScreen extends Screen {
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
 
+
         paint2 = new Paint();
         paint2.setTextSize(100);
         paint2.setTextAlign(Paint.Align.CENTER);
         paint2.setAntiAlias(true);
         paint2.setColor(Color.WHITE);
 
+        paint3 = new Paint();
+        paint3.setTextSize(100);
+        paint3.setTextAlign(Paint.Align.CENTER);
+        paint3.setAntiAlias(true);
+        paint3.setColor(Color.BLACK);
+        paint3.setAlpha(50);
+
+        container = new ElementContainer(this, true);
+        firstbutton = new UIButton(container, game.getGraphics(), 100, 100, 300, 200);
+        //container.addElement(firstbutton);
+
+        //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
+        text = new BlinkingText("Blinking!", 50, Color.BLACK, 0.02, 200, 550);
     }
 
     public static Background getBg1() {
@@ -98,60 +115,34 @@ public class GameScreen extends Screen {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = (TouchEvent) touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_DOWN) {
-
-                if (inBounds(event, 0, 285, 65, 65)) {
-                    //PLACEHOLDER
-                }
-
-
-            }
-
-            if (event.type == TouchEvent.TOUCH_UP) {
-
-                if (inBounds(event, 0, 0, 35, 35)) {
-                    pause();
-
-                }
-
-            }
-
+            container.processClick(event);
         }
 
 
         // 3. Call individual update() methods here.
         // This is where all the game updates happen.
         // For example, robot.update();
-
-
+        //text.update(deltaTime);
         bg1.update();
         bg2.update();
         animate();
 
     }
 
-    private boolean inBounds(TouchEvent event, int x, int y, int width,
-                             int height) {
-        if (event.x > x && event.x < x + width - 1 && event.y > y
-                && event.y < y + height - 1)
-            return true;
-        else
-            return false;
-    }
 
     private void updatePaused(List touchEvents) {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = (TouchEvent) touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
-                if (inBounds(event, 0, 0, 800, 240)) {
+            if (event.type == TouchEvent.TOUCH_UP) {    //TODO TOUCH EVENTS
+                if (Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
 
-                    if (!inBounds(event, 0, 0, 35, 35)) {
+                    if (!Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
                         resume();
                     }
                 }
 
-                if (inBounds(event, 0, 240, 800, 240)) {
+                if (Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
                     nullify();
                     goToMenu();
                 }
@@ -166,6 +157,7 @@ public class GameScreen extends Screen {
         g.drawImage(Assets.background, bg1.getBgX(), bg1.getBgY());
         g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
 
+        text.update(g);
 
         // First draw the game elements.
 
@@ -184,8 +176,8 @@ public class GameScreen extends Screen {
     }
 
     public void animate() {
-        anim.update(10);
-        hanim.update(50);
+//        anim.update(10);
+        //       hanim.update(50);
     }
 
     private void nullify() {
@@ -214,10 +206,13 @@ public class GameScreen extends Screen {
 
     private void drawRunningUI() {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.button, 0, 285, 0, 0, 65, 65);
-        g.drawImage(Assets.button, 0, 350, 0, 65, 65, 65);
-        g.drawImage(Assets.button, 0, 415, 0, 130, 65, 65);
-        g.drawImage(Assets.button, 0, 0, 0, 195, 35, 35);
+
+
+        g.drawImage(Assets.button, 0, 285, 0, 0, 60, 60);
+        g.drawImage(Assets.button, 0, 350, 0, 65, 60, 60);
+        g.drawImage(Assets.button, 0, 415, 0, 130, 60, 60);
+        g.drawImage(Assets.button, 0, 0, 0, 195, 60, 60);
+
 
     }
 
@@ -227,14 +222,6 @@ public class GameScreen extends Screen {
         g.drawARGB(155, 0, 0, 0);
         g.drawString("Resume", 400, 165, paint2);
         g.drawString("Menu", 400, 360, paint2);
-
-    }
-
-    private void drawGameOverUI() {
-        Graphics g = game.getGraphics();
-        g.drawRect(0, 0, 1281, 801, Color.BLACK);
-        g.drawString("GAME OVER.", 400, 240, paint2);
-        g.drawString("Tap to return.", 400, 290, paint);
 
     }
 
@@ -253,7 +240,6 @@ public class GameScreen extends Screen {
 
     @Override
     public void dispose() {
-
     }
 
     @Override
