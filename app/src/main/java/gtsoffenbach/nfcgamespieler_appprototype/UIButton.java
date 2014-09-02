@@ -1,20 +1,24 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
-import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
-
 /**
  * Created by Noli on 01.09.2014.
  */
 public class UIButton extends UIElement {
-    boolean toggle = true;
 
-    UIButton(final ElementContainer container, final Graphics graphics, final int dx, final int dy, final int sx, final int sy) {
-        super(container, dx, dy, sx, sy, graphics);
+
+    UIButton(final ElementContainer container, final int dx, final int dy, final int sx, final int sy) {
+        super(container, dx, dy, sx, sy);
+
+    }
+
+    UIButton(final ElementContainer container, final int dx, final int dy) {
+        super(container, dx, dy, Assets.button.getWidth(), Assets.button.getHeight());
+
     }
 
     @Override
     public void draw() {
-        if (toggle) {
+        if (isPressed()) {
             //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, 0, 0,getRectangle().width(),getRectangle().height());
             //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, getRectangle().width(), getRectangle().height() );
             getGraphics().drawImage(Assets.button, getRectangle().left, getRectangle().top);
@@ -26,6 +30,6 @@ public class UIButton extends UIElement {
 
     @Override
     public void Click() {
-        toggle = !toggle;
+
     }
 }

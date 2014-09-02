@@ -23,11 +23,24 @@ public class Utils {
         return bb.getLong();
     }
 
-    public static boolean inBounds(Input.TouchEvent event, Rect rect) {
-        if (event.x > rect.left && event.x < rect.left + rect.width() - 1 && event.x > rect.top
-                && event.y < rect.top + rect.height() - 1)
-            return true;
-        else
+    public static boolean inBounds(Input.TouchEvent event, Rect rect) { //TODO ganz ganz ganz ganz ganz komisch
+
+        boolean one = event.x > rect.left;
+        boolean two = event.x < rect.left + rect.right - 1;
+
+        boolean three = event.y > rect.top;
+        boolean four = event.y < rect.top + rect.bottom - 1;
+        if (one) {
+            if (two) {
+                if (three) {
+                    if (four) {
+                        return true;
+                    }
+                }
+            }
+        }
             return false;
+
+        //return rect.contains(event.x,event.y);
     }
 }

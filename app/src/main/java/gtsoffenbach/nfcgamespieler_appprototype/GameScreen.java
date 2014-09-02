@@ -62,7 +62,8 @@ public class GameScreen extends Screen {
         paint3.setAlpha(50);
 
         container = new ElementContainer(this, true);
-        firstbutton = new UIButton(container, game.getGraphics(), 100, 100, 300, 200);
+        firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight());
+        firstbutton.setGraphics(game.getGraphics());
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
@@ -123,6 +124,7 @@ public class GameScreen extends Screen {
         // This is where all the game updates happen.
         // For example, robot.update();
         //text.update(deltaTime);
+
         bg1.update();
         bg2.update();
         animate();
@@ -137,12 +139,12 @@ public class GameScreen extends Screen {
             if (event.type == TouchEvent.TOUCH_UP) {    //TODO TOUCH EVENTS
                 if (Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
 
-                    if (!Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
+                    if (!Utils.inBounds(event, new Rect(0, 0, 35, 35))) {
                         resume();
                     }
                 }
 
-                if (Utils.inBounds(event, new Rect(0, 0, 800, 240))) {
+                if (Utils.inBounds(event, new Rect(0, 240, 800, 240))) {
                     nullify();
                     goToMenu();
                 }
@@ -169,7 +171,7 @@ public class GameScreen extends Screen {
         if (state == GameState.Ready)
             drawReadyUI();
         if (state == GameState.Running)
-            drawRunningUI();
+            drawRunningUI(deltaTime);
         if (state == GameState.Paused)
             drawPausedUI();
 
@@ -204,14 +206,14 @@ public class GameScreen extends Screen {
 
     }
 
-    private void drawRunningUI() {
+    private void drawRunningUI(float deltaTime) {
         Graphics g = game.getGraphics();
+        container.updateAll(deltaTime, g);
 
-
-        g.drawImage(Assets.button, 0, 285, 0, 0, 60, 60);
+        /*g.drawImage(Assets.button, 0, 285, 0, 0, 60, 60);
         g.drawImage(Assets.button, 0, 350, 0, 65, 60, 60);
         g.drawImage(Assets.button, 0, 415, 0, 130, 60, 60);
-        g.drawImage(Assets.button, 0, 0, 0, 195, 60, 60);
+        g.drawImage(Assets.button, 0, 0, 0, 195, 60, 60);*/
 
 
     }

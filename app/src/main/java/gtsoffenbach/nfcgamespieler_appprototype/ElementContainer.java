@@ -2,6 +2,7 @@ package gtsoffenbach.nfcgamespieler_appprototype;
 
 import java.util.ArrayList;
 
+import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
 
@@ -15,6 +16,7 @@ public class ElementContainer {
 
     ElementContainer(Screen screen, boolean visible) {
         this.screen = screen;
+        enabled = true;
     }
 
     public boolean isEnabled() {
@@ -36,18 +38,19 @@ public class ElementContainer {
         elements.add(element);
     }
 
-    public void updateAll(float delta) {
+    public void updateAll(float delta, Graphics graphics) {
         if (enabled) {
             for (UIElement element : elements) {
+                element.setGraphics(graphics);
                 element.update(delta);
             }
         }
     }
 
     public void processClick(Input.TouchEvent event) {
-        if (enabled) {
-            for (int i = elements.size(); i >= 0; i--) {
-                UIElement element = elements.get(i);
+        if (enabled && elements.size() != 0) {
+            for (int i = elements.size(); i > 0; i--) {
+                UIElement element = elements.get(i - 1);
                 if (Utils.inBounds(event, element.getRectangle())) {
                     element.onClick(event);
                 }

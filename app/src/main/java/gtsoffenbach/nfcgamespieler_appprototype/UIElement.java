@@ -18,14 +18,23 @@ public class UIElement {
     private boolean enabled;
     private boolean visible;
     private Graphics graphics;
+    private boolean pressed = true;
 
-    UIElement(final ElementContainer container, final int dx, final int dy, final int sx, final int sy, final Graphics graphics) {
+    UIElement(final ElementContainer container, final int dx, final int dy, final int sx, final int sy) {
         this.rectangle = new Rect(dx, dy, sx, sy);
         this.container = container;
-        //this.container.addElement(this);
+        this.container.addElement(this);
         this.visible = true;
         this.enabled = true;
-        this.graphics = graphics;
+        //this.graphics = graphics;
+    }
+
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean toggle) {
+        this.pressed = toggle;
     }
 
     public Rect getRectangle() {
@@ -96,7 +105,6 @@ public class UIElement {
     public void draw() {
     }
 
-    ;
 
     public void onClick(Input.TouchEvent event) {
         if (enabled) {
@@ -111,7 +119,13 @@ public class UIElement {
                 }
                 if (!hit) { //there was no inner element of this element hit, so bring this element to foreground
                     container.bringToForeground(this);
-                    Click();
+                    if (event.type == Input.TouchEvent.TOUCH_UP) {
+                        pressed = true;
+                    }
+                    if (event.type == Input.TouchEvent.TOUCH_DOWN) {
+                        pressed = false;
+                    }
+
                 }
             }
         }
@@ -120,7 +134,6 @@ public class UIElement {
     public void Click() {
     }
 
-    ;
 
     public void add(UIElement element) {
         this.childs.add(element);
