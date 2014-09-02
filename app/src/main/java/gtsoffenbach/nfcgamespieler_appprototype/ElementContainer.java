@@ -53,8 +53,23 @@ public class ElementContainer {
                 UIElement element = elements.get(i - 1);
                 if (Utils.inBounds(event, element.getRectangle())) {
                     element.onClick(event);
+                    break;
                 }
             }
         }
+    }
+
+
+    public void remove(UIElement element) {
+        if (element != null) {
+            elements.remove(element);
+            element.dismiss();
+        }
+    }
+
+    public void remove(int i) {
+        UIElement element = elements.get(i);
+        elements.remove(i);
+        element.dismiss();
     }
 }

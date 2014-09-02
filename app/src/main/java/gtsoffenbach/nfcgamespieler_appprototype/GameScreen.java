@@ -26,7 +26,7 @@ public class GameScreen extends Screen {
     int livesLeft = 1;
     Paint paint, paint2, paint3;
     private Image currentSprite;
-    private Animation anim, hanim;
+    private Animation chest_anim;
     private ArrayList tilearray = new ArrayList();
     private BlinkingText text;
     private ElementContainer container;
@@ -61,9 +61,20 @@ public class GameScreen extends Screen {
         paint3.setColor(Color.BLACK);
         paint3.setAlpha(50);
 
+        chest_anim = new Animation();
+        for (int i = 0; i < Assets.chest.length - 1; i++) {
+            chest_anim.addFrame(Assets.chest[i], 50);
+        }
+        chest_anim.addFrame(Assets.chest[Assets.chest.length - 1], 5000);
+
+        currentSprite = chest_anim.getImage();
+
         container = new ElementContainer(this, true);
         firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight());
         firstbutton.setGraphics(game.getGraphics());
+        UIButton second = new UIButton(container, 100, 100);
+        UIButton third = new UIButton(container, 130, 130);
+        UIButton fourth = new UIButton(container, 160, 160);
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
@@ -159,6 +170,7 @@ public class GameScreen extends Screen {
         g.drawImage(Assets.background, bg1.getBgX(), bg1.getBgY());
         g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
 
+
         text.update(g);
 
         // First draw the game elements.
@@ -180,6 +192,7 @@ public class GameScreen extends Screen {
     public void animate() {
 //        anim.update(10);
         //       hanim.update(50);
+        chest_anim.update(50);
     }
 
     private void nullify() {
@@ -190,8 +203,7 @@ public class GameScreen extends Screen {
         bg1 = null;
         bg2 = null;
         currentSprite = null;
-        anim = null;
-        hanim = null;
+        chest_anim = null;
 
         // Call garbage collector to clean up memory.
         System.gc();
@@ -209,6 +221,9 @@ public class GameScreen extends Screen {
     private void drawRunningUI(float deltaTime) {
         Graphics g = game.getGraphics();
         container.updateAll(deltaTime, g);
+
+        g.drawImage(currentSprite, 400, 800);
+        currentSprite = chest_anim.getImage();
 
         /*g.drawImage(Assets.button, 0, 285, 0, 0, 60, 60);
         g.drawImage(Assets.button, 0, 350, 0, 65, 60, 60);

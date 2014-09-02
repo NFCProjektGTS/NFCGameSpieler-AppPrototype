@@ -124,6 +124,7 @@ public class UIElement {
                     }
                     if (event.type == Input.TouchEvent.TOUCH_DOWN) {
                         pressed = false;
+                        Click();
                     }
 
                 }
@@ -144,4 +145,19 @@ public class UIElement {
             container.addElement(element);
         }
     }
+
+    public void dismiss() {
+        this.graphics = null;
+        this.childs = null;
+        this.container = null;
+        this.enabled = false;
+        this.rectangle = null;
+        try {
+            super.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+
 }

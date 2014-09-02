@@ -11,6 +11,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 public class Assets {
 
     public static Image menu, splash, background;
+    public static Image[] chest;
     public static Image button, button_pressed;
     public static Sound click, magic; //magic is a sound played when UI element is spawned with cool effect
     public static Music theme;
