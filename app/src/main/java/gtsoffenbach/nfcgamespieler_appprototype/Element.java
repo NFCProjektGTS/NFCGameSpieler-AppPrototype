@@ -2,31 +2,37 @@ package gtsoffenbach.nfcgamespieler_appprototype;
 
 import android.graphics.Rect;
 
-import java.util.ArrayList;
-
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
 
 /**
  * Created by Noli on 31.08.2014.
  */
-public class UIElement {
-    private ElementContainer container;
+public class Element {
+    private UIElement father;
     private Rect rectangle;
-    private ArrayList<Element> childs = new ArrayList<Element>();
     private boolean locked = false;
     private boolean enabled;
     private boolean visible;
     private Graphics graphics;
     private boolean pressed = true;
 
-    UIElement(final ElementContainer container, final int dx, final int dy, final int sx, final int sy) {
-        this.rectangle = new Rect(dx, dy, sx, sy);
-        this.container = container;
-        this.container.addElement(this);
+    Element(final UIElement father, final int sx, final int sy) {
+        this.father = father;
+        this.father.add(this);
+        this.graphics = father.getGraphics();
+        this.rectangle = new Rect(father.getRectangle().left, father.getRectangle().top, sx, sy);
         this.visible = true;
         this.enabled = true;
         //this.graphics = graphics;
+    }
+
+    public UIElement getFather() {
+        return father;
+    }
+
+    public void setFather(UIElement father) {
+        this.father = father;
     }
 
     public boolean isPressed() {
@@ -43,22 +49,6 @@ public class UIElement {
 
     public void setRectangle(Rect rectangle) {
         this.rectangle = rectangle;
-    }
-
-    public ArrayList<Element> getChilds() {
-        return childs;
-    }
-
-    public void setChilds(ArrayList<Element> childs) {
-        this.childs = childs;
-    }
-
-    public ElementContainer getContainer() {
-        return container;
-    }
-
-    public void setContainer(ElementContainer container) {
-        this.container = container;
     }
 
     public boolean isLocked() {
@@ -97,9 +87,6 @@ public class UIElement {
         if (enabled) {
             if (visible) {
                 draw(delta);
-                for (Element element : childs) {
-                    element.update(delta);
-                }
             }
             //do other
         }
@@ -112,24 +99,12 @@ public class UIElement {
     public void onClick(Input.TouchEvent event) {
         if (enabled) {
             if (!locked) {
-                boolean hit = false;
-                for (Element element : childs) {
-                    if (Utils.inBounds(event, element.getRectangle())) {
-                        element.onClick(event);
-                        hit = true;
-                        break;
-                    }
+                if (event.type == Input.TouchEvent.TOUCH_UP) {
+                    pressed = true;
+                    Click();
                 }
-                if (!hit) { //there was no inner element of this element hit, so bring this element to foreground
-                    container.bringToForeground(this);
-                    if (event.type == Input.TouchEvent.TOUCH_UP) {
-                        pressed = true;
-                        Click();
-                    }
-                    if (event.type == Input.TouchEvent.TOUCH_DOWN) {
-                        pressed = false;
-
-                    }
+                if (event.type == Input.TouchEvent.TOUCH_DOWN) {
+                    pressed = false;
 
                 }
             }
@@ -140,20 +115,9 @@ public class UIElement {
     }
 
 
-    public void add(Element element) {
-        this.childs.add(element);
-    }
-
-    public void add(Element[] elements) {
-        for (Element element : elements) {
-            this.childs.add(element);
-        }
-    }
-
     public void dismiss() {
         this.graphics = null;
-        this.childs = null;
-        this.container = null;
+        this.father = null;
         this.enabled = false;
         this.rectangle = null;
         try {

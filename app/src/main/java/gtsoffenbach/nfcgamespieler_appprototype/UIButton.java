@@ -16,7 +16,7 @@ public class UIButton extends UIElement {
     }
 
     @Override
-    public void draw() {
+    public void draw(float delta) {
         if (isPressed()) {
             //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, 0, 0,getRectangle().width(),getRectangle().height());
             //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, getRectangle().width(), getRectangle().height() );

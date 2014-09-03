@@ -2,24 +2,21 @@ package gtsoffenbach.nfcgamespieler_appprototype;
 
 import android.graphics.Paint;
 
-import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
-
 /**
  * Created by Noli on 28.08.2014.
  */
-public class BlinkingText {
+public class BlinkingText extends Element {
     //private Graphics graphics;
     private Paint paint;
     private String msg;
-    private int x, y;
     private boolean toggle;
     private double speed;
 
-    BlinkingText(String msg, int size, int color, double speed, int x, int y) {
+
+    BlinkingText(UIElement father, int sx, int sy, String msg, int size, int color, double speed) {
+        super(father, sx, sy);
         this.speed = speed;
         this.msg = msg;
-        this.x = x;
-        this.y = y;
         paint = new Paint();
         paint.setTextSize(size);
         paint.setTextAlign(Paint.Align.CENTER); //no parameter yet
@@ -46,22 +43,6 @@ public class BlinkingText {
         this.msg = msg;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public double getSpeed() {
         return speed;
     }
@@ -70,7 +51,8 @@ public class BlinkingText {
         this.speed = speed;
     }
 
-    public void update(Graphics g) {
+    @Override
+    public void draw(float delta) {
 
             /*try {
                 Thread.currentThread().sleep(Math.round(time * 1000 / 255));
@@ -95,6 +77,6 @@ public class BlinkingText {
         if (paint.getAlpha() == 0 && !toggle)
             toggle = !toggle;
 
-        g.drawString(msg, x, y, paint);
+        getGraphics().drawString(msg, getRectangle().left, getRectangle().top, paint);
     }
 }

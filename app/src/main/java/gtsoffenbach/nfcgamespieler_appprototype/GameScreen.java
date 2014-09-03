@@ -86,7 +86,7 @@ public class GameScreen extends Screen {
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
-        text = new BlinkingText("Blinking!", 50, Color.BLACK, 0.02, 200, 550);
+        text = new BlinkingText(firstbutton, 0, 0, "Blinking!", 50, Color.BLACK, 0.02);
     }
 
     public static Background getBg1() {
@@ -179,7 +179,7 @@ public class GameScreen extends Screen {
         g.drawImage(Assets.background, bg2.getBgX(), bg2.getBgY());
 
 
-        text.update(g);
+        text.update(deltaTime);
 
         // First draw the game elements.
 
