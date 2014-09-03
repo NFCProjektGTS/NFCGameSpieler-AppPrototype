@@ -8,16 +8,15 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
-import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 
 /**
  * Created by Noli on 30.07.2014.
  */
 public class MainMenuScreen extends Screen {
-    private ElementContainer container;
-    private int levelselected = 0;
     UIButton button_start,button_settings,button_help;
     BlinkingText start;
+    private ElementContainer container;
+    private int levelselected = 0;
 
     public MainMenuScreen(Game game) {
         super(game);
@@ -44,7 +43,7 @@ public class MainMenuScreen extends Screen {
         button_start.setGraphics(game.getGraphics());
         button_settings.setGraphics(game.getGraphics());
         button_help.setGraphics(game.getGraphics());
-        start = new BlinkingText(button_start, 0, 0, "START", 75, Color.WHITE,0.02 );
+        start = new BlinkingText(button_start, 0, 0, "START", 75, Color.WHITE, 1);
     }
 
     private void goToScreenGame(){

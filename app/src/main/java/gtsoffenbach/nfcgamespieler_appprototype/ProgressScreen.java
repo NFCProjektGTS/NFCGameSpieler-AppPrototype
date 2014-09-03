@@ -39,7 +39,6 @@ public class ProgressScreen extends Screen implements View.OnDragListener {
     }
 
 
-
     @Override
     public void update(float deltaTime) {
         Graphics g = game.getGraphics();
@@ -60,7 +59,6 @@ public class ProgressScreen extends Screen implements View.OnDragListener {
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
             }
-
         }
 
 

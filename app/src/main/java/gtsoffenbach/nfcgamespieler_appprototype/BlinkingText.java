@@ -63,23 +63,27 @@ public class BlinkingText extends Element {
             } catch (Exception e) {
                 e.printStackTrace();
             }*/
-        int alpha = paint.getAlpha();
-        if (alpha < 255 && toggle) {
-            alpha += (int) (255 * speed);
-            if (alpha > 255)
-                alpha = 255;
-            paint.setAlpha(alpha);
+        paint.setAlpha(255);
+        if (speed != 1) {
+            paint.setAlpha(0);
+            int alpha = paint.getAlpha();
+            if (alpha < 255 && toggle) {
+                alpha += (int) (255 * speed);
+                if (alpha > 255)
+                    alpha = 255;
+                paint.setAlpha(alpha);
+            }
+            if (paint.getAlpha() == 255 && toggle)
+                toggle = !toggle;
+            if (alpha <= 255 && !toggle) {
+                alpha -= (int) (255 * speed);
+                if (alpha < 0)
+                    alpha = 0;
+                paint.setAlpha(alpha);
+            }
+            if (paint.getAlpha() == 0 && !toggle)
+                toggle = !toggle;
         }
-        if (paint.getAlpha() == 255 && toggle)
-            toggle = !toggle;
-        if (alpha <= 255 && !toggle) {
-            alpha -= (int) (255 * speed);
-            if (alpha < 0)
-                alpha = 0;
-            paint.setAlpha(alpha);
-        }
-        if (paint.getAlpha() == 0 && !toggle)
-            toggle = !toggle;
 
         getGraphics().drawString(msg,
                 getRectangle().centerX()+dad.getRectangle().centerX(),
