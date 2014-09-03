@@ -6,25 +6,21 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 
 /**
  * Created by Noli on 30.07.2014.
  */
 public class MainMenuScreen extends Screen {
+    ElementContainer container = new ElementContainer(this, true);
+    private int levelselected = 0;
 
-    private GameScreen screen;
 
     public MainMenuScreen(Game game) {
         super(game);
     }
 
-    public GameScreen getScreen() {
-        return screen;
-    }
 
-    public void setScreen(GameScreen screen) {
-        this.screen = screen;
-    }
 
     @Override
     public void update(float deltaTime) {
@@ -36,12 +32,12 @@ public class MainMenuScreen extends Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-                if (inBounds(event, 50, 50, 60, 60)) {
-                    screen = new GameScreen(game);
-                    game.setScreen(screen);
+                if (inBounds(event, 0, 0, AndroidGame.width, AndroidGame.height)) {
+                    game.setScreen(new GameScreen(game, levelselected));
                 }
 
             }
+
         }
     }
 

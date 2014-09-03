@@ -121,10 +121,11 @@ public class UIElement {
                     container.bringToForeground(this);
                     if (event.type == Input.TouchEvent.TOUCH_UP) {
                         pressed = true;
+                        Click();
                     }
                     if (event.type == Input.TouchEvent.TOUCH_DOWN) {
                         pressed = false;
-                        Click();
+
                     }
 
                 }

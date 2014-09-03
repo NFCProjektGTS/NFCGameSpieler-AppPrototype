@@ -31,8 +31,9 @@ public class GameScreen extends Screen {
     private BlinkingText text;
     private ElementContainer container;
     private UIButton firstbutton;
+    private UIButton progressScreen;
 
-    public GameScreen(Game game) {
+    public GameScreen(final Game game, int level) {
         super(game);
 
         // Initialize game objects here
@@ -75,6 +76,13 @@ public class GameScreen extends Screen {
         UIButton second = new UIButton(container, 100, 100);
         UIButton third = new UIButton(container, 130, 130);
         UIButton fourth = new UIButton(container, 160, 160);
+        progressScreen = new UIButton(container, 600, 0) {
+            @Override
+            public void Click() {
+                game.setScreen(new ProgressScreen(game, 0));
+            }
+        };
+
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
