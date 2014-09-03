@@ -11,10 +11,14 @@ public class BlinkingText extends Element {
     private String msg;
     private boolean toggle;
     private double speed;
+    private UIElement dad;
+    private int size;
 
 
     BlinkingText(UIElement father, int sx, int sy, String msg, int size, int color, double speed) {
-        super(father, sx, sy+father.getRectangle().centerY());
+        super(father, sx, sy);
+        dad=father;
+        this.size=size;
         this.speed = speed;
         this.msg = msg;
         paint = new Paint();
@@ -77,6 +81,6 @@ public class BlinkingText extends Element {
         if (paint.getAlpha() == 0 && !toggle)
             toggle = !toggle;
 
-        getGraphics().drawString(msg, getRectangle().left+getRectangle().centerX(), getRectangle().top+getRectangle().centerY(), paint);
+        getGraphics().drawString(msg, getRectangle().centerX()+dad.getRectangle().centerX()-((getRectangle().left-getRectangle().right)/2), getRectangle().centerY()+dad.getRectangle().centerY()-size/2, paint);
     }
 }
