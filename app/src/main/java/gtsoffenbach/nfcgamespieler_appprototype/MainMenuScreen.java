@@ -17,6 +17,7 @@ public class MainMenuScreen extends Screen {
     private ElementContainer container;
     private int levelselected = 0;
     UIButton button_start,button_settings,button_help;
+    BlinkingText start;
 
     public MainMenuScreen(Game game) {
         super(game);
@@ -40,9 +41,10 @@ public class MainMenuScreen extends Screen {
 
                 }
         };
-
-
-
+        button_start.setGraphics(game.getGraphics());
+        button_settings.setGraphics(game.getGraphics());
+        button_help.setGraphics(game.getGraphics());
+        start = new BlinkingText(button_start, 40, 94, "Blinking!", 50, Color.WHITE, 0.02);
     }
 
     private void goToScreenGame(){
@@ -75,7 +77,7 @@ public class MainMenuScreen extends Screen {
         Graphics g = game.getGraphics();
         g.drawImage(Assets.menu, 0, 0);
         container.updateAll(deltaTime,g);
-
+        start.update(deltaTime);
 
     }
 
