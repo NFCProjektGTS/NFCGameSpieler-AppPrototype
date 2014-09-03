@@ -81,6 +81,9 @@ public class BlinkingText extends Element {
         if (paint.getAlpha() == 0 && !toggle)
             toggle = !toggle;
 
-        getGraphics().drawString(msg, getRectangle().centerX()+dad.getRectangle().centerX()-((getRectangle().left-getRectangle().right)/2), getRectangle().centerY()+dad.getRectangle().centerY()-size/2, paint);
+        getGraphics().drawString(msg,
+                getRectangle().centerX()+dad.getRectangle().centerX(),
+                getRectangle().centerY()+dad.getRectangle().centerY()+size/4,
+                paint);
     }
 }

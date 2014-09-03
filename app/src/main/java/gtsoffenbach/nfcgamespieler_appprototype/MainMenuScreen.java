@@ -44,7 +44,7 @@ public class MainMenuScreen extends Screen {
         button_start.setGraphics(game.getGraphics());
         button_settings.setGraphics(game.getGraphics());
         button_help.setGraphics(game.getGraphics());
-        start = new BlinkingText(button_start, 40, 94, "Blinking!", 50, Color.WHITE, 0.02);
+        start = new BlinkingText(button_start, 0, 0, "START", 75, Color.WHITE,0.02 );
     }
 
     private void goToScreenGame(){
