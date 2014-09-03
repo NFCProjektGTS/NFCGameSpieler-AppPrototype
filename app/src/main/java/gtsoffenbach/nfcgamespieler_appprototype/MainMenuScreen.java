@@ -1,5 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
+import android.graphics.Color;
+
 import java.util.List;
 
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
@@ -12,15 +14,40 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
  * Created by Noli on 30.07.2014.
  */
 public class MainMenuScreen extends Screen {
-    ElementContainer container = new ElementContainer(this, true);
+    private ElementContainer container;
     private int levelselected = 0;
-
+    UIButton button_start,button_settings,button_help;
 
     public MainMenuScreen(Game game) {
         super(game);
+        container = new ElementContainer(this, true);
+        button_start = new UIButton(container,104,479){
+            @Override
+            public void Click(){
+                goToScreenGame();
+            }
+        };
+        button_help = new UIButton(container,104,689){
+            @Override
+            public void Click(){
+
+            }
+        };
+
+        button_settings = new UIButton(container,104,899) {
+                @Override
+                public void Click () {
+
+                }
+        };
+
+
+
     }
 
-
+    private void goToScreenGame(){
+        game.setScreen(new GameScreen(game, levelselected));
+    }
 
     @Override
     public void update(float deltaTime) {
@@ -30,14 +57,7 @@ public class MainMenuScreen extends Screen {
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             Input.TouchEvent event = touchEvents.get(i);
-            if (event.type == Input.TouchEvent.TOUCH_UP) {
-
-                if (inBounds(event, 0, 0, AndroidGame.width, AndroidGame.height)) {
-                    game.setScreen(new GameScreen(game, levelselected));
-                }
-
-            }
-
+            container.processClick(event);
         }
     }
 
@@ -54,6 +74,7 @@ public class MainMenuScreen extends Screen {
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
         g.drawImage(Assets.menu, 0, 0);
+        container.updateAll(deltaTime,g);
 
 
     }
