@@ -151,7 +151,6 @@ public class GameGraphics implements Graphics {
 
 
         canvas.drawBitmap(((GameImage) Image).bitmap, srcRect, dstRect, null);
-
     }
 
     @Override

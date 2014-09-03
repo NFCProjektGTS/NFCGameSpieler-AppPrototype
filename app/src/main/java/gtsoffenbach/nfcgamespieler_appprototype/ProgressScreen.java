@@ -8,22 +8,19 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
 
 /**
- * Created by Noli on 30.07.2014.
+ * Created by Noli on 03.09.2014.
  */
-public class MainMenuScreen extends Screen {
-
-    private GameScreen screen;
-
-    public MainMenuScreen(Game game) {
+public class ProgressScreen extends Screen {
+    public ProgressScreen(Game game) {
         super(game);
     }
 
-    public GameScreen getScreen() {
-        return screen;
-    }
+    @Override
+    public void paint(float deltaTime) {
+        Graphics g = game.getGraphics();
+        g.drawImage(Assets.menu, 0, 0);
 
-    public void setScreen(GameScreen screen) {
-        this.screen = screen;
+
     }
 
     @Override
@@ -36,30 +33,9 @@ public class MainMenuScreen extends Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
 
-                if (inBounds(event, 50, 50, 60, 60)) {
-                    screen = new GameScreen(game);
-                    game.setScreen(screen);
-                }
 
             }
         }
-    }
-
-    private boolean inBounds(Input.TouchEvent event, int x, int y, int width,
-                             int height) {
-        if (event.x > x && event.x < x + width - 1 && event.y > y
-                && event.y < y + height - 1)
-            return true;
-        else
-            return false;
-    }
-
-    @Override
-    public void paint(float deltaTime) {
-        Graphics g = game.getGraphics();
-        g.drawImage(Assets.menu, 0, 0);
-
-
     }
 
     @Override
