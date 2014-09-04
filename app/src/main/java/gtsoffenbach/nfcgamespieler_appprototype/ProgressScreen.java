@@ -176,7 +176,7 @@ public class ProgressScreen extends Screen {
     private void updatePosZero(float deltaTime) {
         //int step = (int) Math.abs(buttons[selectedLevel].getRectangle().left)/1/deltaTime;
         int glitch = Math.abs(buttons[selectedLevel].getRectangle().left) == 0 ? 1 : Math.abs(buttons[selectedLevel].getRectangle().left);
-        int step = 15;//(int) Math.ceil(glitch / 1 / deltaTime);
+        int step = 40;//(int) Math.ceil(glitch / 1 / deltaTime);
         if (buttons[selectedLevel].getRectangle().left > (AndroidGame.width - Assets.button.getWidth()) / 2) {
             //buttons[selectedLevel].getRectangle().offsetTo(buttons[selectedLevel].getRectangle().left - step, buttons[selectedLevel].getRectangle().top);
             if (buttons[selectedLevel].getRectangle().left - step < (AndroidGame.width - Assets.button.getWidth()) / 2) {
