@@ -20,7 +20,7 @@ public class LoadingScreen extends Screen {
     public void update(float deltaTime) {
         Graphics g = game.getGraphics();
         Assets.menu = g.newImage("mainmenu.png", ImageFormat.RGB565);
-        Assets.background = g.newImage("background.jpg", ImageFormat.RGB565);
+        Assets.background = g.newImage("gamescreen.png", ImageFormat.RGB565);
 
         Assets.locked = g.newImage("locked.png", ImageFormat.RGB565);
         Assets.unlocked = g.newImage("unlocked.png", ImageFormat.RGB565);
