@@ -15,10 +15,10 @@ public class Chest extends Element {
         this.chest_anim = new Animation(false);
         this.speed = speed;
         this.finalshow = finalshow;
-        for (int i = 0; i < Assets.chest.length - 1; i++) {
-            chest_anim.addFrame(Assets.chest[i], speed);
+        for (int i = 0; i < Assets.chest_half.length - 1; i++) {
+            chest_anim.addFrame(Assets.chest_half[i], speed);
         }
-        chest_anim.addFrame(Assets.chest[Assets.chest.length - 1], finalshow);
+        chest_anim.addFrame(Assets.chest_half[Assets.chest_half.length - 1], finalshow);
     }
 
     public Animation getChest_anim() {
@@ -43,7 +43,9 @@ public class Chest extends Element {
         //getGraphics().drawImage(image,0,0,Assets.chest[0].getWidth(),Assets.chest[0].getHeight(),Assets.chest[0].getWidth()/2,Assets.chest[0].getHeight()/2);
         // super.draw(delta);
         if (image != null) {
-            getGraphics().drawScaledImage(image, 0, 0, super.getRectangle().width(), super.getRectangle().height(), 0, 0, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
+            //getGraphics().drawScaledImage(image, super.getRectangle().left, super.getRectangle().top, super.getRectangle().width(), super.getRectangle().height(), 0, 0, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
+            //getGraphics().drawImage(image,super.getRectangle().left,super.getRectangle().top,Assets.chest[0].getWidth(),Assets.chest[0].getHeight(),Assets.chest[0].getWidth()/2,Assets.chest[0].getHeight()/2);
+            getGraphics().drawImage(image, super.getRectangle().left, super.getRectangle().top);
         }
     }
 

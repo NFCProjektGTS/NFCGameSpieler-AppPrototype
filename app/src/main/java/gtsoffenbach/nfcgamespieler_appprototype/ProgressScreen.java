@@ -28,6 +28,7 @@ public class ProgressScreen extends Screen {
     private GameScreen lastscreen;
     private boolean locked;
     private Chest chest;
+    private boolean ispop;
 
     public ProgressScreen(final Game game, int lastlevel, int seleted) { //NEED SELECTED LEVEL
         super(game);
@@ -57,8 +58,7 @@ public class ProgressScreen extends Screen {
                     }
                     @Override
                     public void draw(float delta) {
-
-                        getGraphics().drawImage(Assets.unlocked, getRectangle().left-Assets.unlocked.getWidth()/8, getRectangle().top-Assets.unlocked.getHeight()/2);
+                        getGraphics().drawImage(Assets.unlocked, getRectangle().left - Assets.unlocked.getWidth() / 8, getRectangle().top - Assets.unlocked.getHeight() / 2);
 
 
                     }
@@ -71,9 +71,7 @@ public class ProgressScreen extends Screen {
                     }
                     @Override
                     public void draw(float delta) {
-
-                        getGraphics().drawImage(Assets.locked, getRectangle().left-Assets.locked.getWidth()/8, getRectangle().top-Assets.locked.getHeight()/2);
-
+                        getGraphics().drawImage(Assets.locked, getRectangle().left - Assets.locked.getWidth() / 8, getRectangle().top - Assets.locked.getHeight() / 2);
 
                     }
                 });
@@ -110,9 +108,10 @@ public class ProgressScreen extends Screen {
     }
 
     public void loadChest(GameScreen last) {
-        this.chest = new Chest(new UIElement(container, (AndroidGame.width - Assets.chest[0].getWidth()) / 2, 50, 0, 0), Assets.chest[0].getWidth(), Assets.chest[0].getHeight(), 700, 10000);
+        //this.chest = new Chest(new UIElement(container,AndroidGame.width/2 - Assets.chest[0].getWidth()/2, 50, Assets.chest[0].getWidth(), Assets.chest[0].getHeight()), Assets.chest[0].getWidth(), Assets.chest[0].getHeight(), 700, 5000);
+        this.chest = new Chest(new UIElement(container, (AndroidGame.width - Assets.chest[0].getWidth()) / 2, AndroidGame.height - Assets.chest[0].getHeight(), Assets.chest[0].getWidth(), Assets.chest[0].getHeight()), Assets.chest[0].getWidth(), Assets.chest[0].getHeight(), 700, 5000);
         this.chest.setGraphics(game.getGraphics());
-        this.step = 45;
+        this.step = 65;
         this.lastscreen = last;
         this.locked = true;
     }
@@ -137,6 +136,12 @@ public class ProgressScreen extends Screen {
     public void update(float deltaTime) {
         if (chest != null) {
             if (chest.getChest_anim().isEnd()) {
+                chest.dismiss();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 game.setScreen(lastscreen);
             }
         }

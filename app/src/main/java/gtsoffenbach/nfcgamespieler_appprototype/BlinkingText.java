@@ -31,6 +31,7 @@ public class BlinkingText extends Element {
 
     }
 
+
     public Paint getPaint() {
         return paint;
     }

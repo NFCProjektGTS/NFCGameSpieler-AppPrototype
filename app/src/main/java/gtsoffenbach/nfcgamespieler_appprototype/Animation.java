@@ -59,15 +59,15 @@ public class Animation {
                 if (!endless) {
                     currentFrame = frames.size() - 1;
                 } else {
-                currentFrame = 0;
+                    currentFrame = 0;
                 }
+
                 this.end = true;
-
             }
-
             while (animTime > getFrame(currentFrame).endTime) {
-                if (!end)
+                if (!end) {
                     currentFrame++;
+                }
             }
         }
 
