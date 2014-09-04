@@ -32,14 +32,16 @@ public class MainMenuScreen extends Screen {
         button_help = new UIButton(container,104,689){
             @Override
             public void Click(){
-                super.Click();
+
+                goToScreenHelp();
             }
         };
 
         button_settings = new UIButton(container,104,899) {
                 @Override
-                public void Click () {
-                    super.Click();
+                public void Click ()
+                {
+                    goToScreenSettings();
                 }
         };
         button_start.setGraphics(game.getGraphics());
@@ -58,6 +60,14 @@ public class MainMenuScreen extends Screen {
         help = new BlinkingText(button_help, 0, 0, "Hilfe", 75, Color.WHITE, 1);
         settings = new BlinkingText(button_settings, 0, 0, "Einstellungen", 75, Color.WHITE, 1);
 
+    }
+
+    private void goToScreenSettings() {
+        game.setScreen(new SettingsScreen(game));
+    }
+
+    private void goToScreenHelp() {
+        game.setScreen(new HelpScreen(game));
     }
 
     private void goToScreenGame(){
