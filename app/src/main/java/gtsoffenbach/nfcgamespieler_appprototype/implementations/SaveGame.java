@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SaveGame {
     public static final String path = "secretfile.secret";
     public static boolean newGame = true;
-    public static Level[] levels = new Level[]{new Level("Armageddon", 0, false), new Level("Armageddon2", 1, false), new Level("Armageddon3", 2, false)};
+    public static Level[] levels = new Level[]{new Level("Armageddon 1", 0, false), new Level("Armageddon 2", 1, false), new Level("Armageddon 3", 2, false)};
 
     private Context caller;
     private FileOutputStream fos;

@@ -188,17 +188,23 @@ public class GameNFC extends NFC {
             for (NdefRecord rec : ms.getRecords()) {
                 switch (new BigInteger(rec.getType()).intValue()) {
                     case OpCode.NFC_INITIAL_TAG:
+                        //not in prototype
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_1:
                         LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_1);
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_2:
+                        LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_2);
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_3:
+                        LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_3);
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_4:
+                        LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_4);
                         break;
-
+                    default:
+                        System.out.print("Unrecognized format");
+                        break;
                 }
             }
         }
