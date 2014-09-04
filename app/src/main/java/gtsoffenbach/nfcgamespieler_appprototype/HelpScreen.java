@@ -16,7 +16,7 @@ public class HelpScreen extends Screen {
     public HelpScreen(Game game){
         super(game);
         container = new ElementContainer(this, true);
-        button_back = new UIButton(container,game.getGraphics().getWidth()/2,game.getGraphics().getHeight()-150){
+        button_back = new UIButton(container,104,479){
             @Override
             public void Click(){
                 super.Click();
