@@ -14,7 +14,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
  */
 public class MainMenuScreen extends Screen {
     UIButton button_start,button_settings,button_help;
-    BlinkingText start;
+    BlinkingText start,help,settings;
     private ElementContainer container;
     private int levelselected = 0;
 
@@ -45,6 +45,9 @@ public class MainMenuScreen extends Screen {
         button_settings.setGraphics(game.getGraphics());
         button_help.setGraphics(game.getGraphics());
         start = new BlinkingText(button_start, 0, 0, "START", 75, Color.WHITE, 1);
+        help = new BlinkingText(button_help, 0, 0, "HILFE", 75, Color.WHITE, 1);
+        settings = new BlinkingText(button_settings, 0, 0, "EINSTELLUNGEN", 75, Color.WHITE, 1);
+
     }
 
     private void goToScreenGame(){
