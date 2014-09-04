@@ -13,6 +13,8 @@ import android.nfc.tech.MifareUltralight;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.math.BigInteger;
+
 import gtsoffenbach.nfcgamespieler_appprototype.Utils;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.NFC;
 
@@ -180,6 +182,35 @@ public class GameNFC extends NFC {
     @Override
     public void operate(NdefMessage[] msgs) {
         //TODO unlock game content on operation
+        for (NdefMessage ms : msgs) {
+            for (NdefRecord rec : ms.getRecords()) {
+                switch (new BigInteger(rec.getType()).intValue()) {
+                    case OpCode.NFC_INITIAL_TAG:
+                        break;
+                    case OpCode.NFC_UNLOCK_LEVEL_1:
+                        break;
+                    case OpCode.NFC_UNLOCK_LEVEL_2:
+                        break;
+                    case OpCode.NFC_UNLOCK_LEVEL_3:
+                        break;
+                    case OpCode.NFC_UNLOCK_LEVEL_4:
+                        break;
+
+                }
+            }
+        }
 
     }
+
+
+    private abstract interface OpCode {
+        public static final int NFC_INITIAL_TAG = 0000;
+        public static final int NFC_UNLOCK_LEVEL_1 = 0001;
+        public static final int NFC_UNLOCK_LEVEL_2 = 0002;
+        public static final int NFC_UNLOCK_LEVEL_3 = 0003;
+        public static final int NFC_UNLOCK_LEVEL_4 = 0004;
+
+    }
+
+    ;
 }

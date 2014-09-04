@@ -29,7 +29,7 @@ public class UIButton extends UIElement {
 
     @Override
     public void Click() {
-
+        Assets.click.play(1f);
         //getContainer().remove(1); Button click to remove other button :D
 
     }

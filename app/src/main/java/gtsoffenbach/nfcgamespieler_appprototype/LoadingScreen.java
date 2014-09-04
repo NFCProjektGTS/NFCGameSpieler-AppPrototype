@@ -5,6 +5,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Graphics.ImageFormat;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Image;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
 
 /**
  * Created by Noli on 05.08.2014.
@@ -38,7 +39,9 @@ public class LoadingScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.splash, 0, 0);
+        //g.drawImage(Assets.splash, 0, 0);
+        g.drawImage(Assets.splash, 0, 0, AndroidGame.width, AndroidGame.height, Assets.splash.getWidth(), Assets.splash.getHeight());
+        g.drawScaledImage(Assets.splash, 0, 0, AndroidGame.width, AndroidGame.height, 0, 0, Assets.splash.getWidth(), Assets.splash.getHeight());
     }
 
     @Override

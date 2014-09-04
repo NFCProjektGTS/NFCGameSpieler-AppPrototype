@@ -26,7 +26,7 @@ public class GameScreen extends Screen {
     int livesLeft = 1;
     Paint paint, paint2, paint3;
     private Image currentSprite;
-    private Animation chest_anim;
+    //private Animation chest_anim;
     private ArrayList tilearray = new ArrayList();
     private BlinkingText text;
     private ElementContainer container;
@@ -62,20 +62,16 @@ public class GameScreen extends Screen {
         paint3.setColor(Color.BLACK);
         paint3.setAlpha(50);
 
-        chest_anim = new Animation();
-        for (int i = 0; i < Assets.chest.length - 1; i++) {
-            chest_anim.addFrame(Assets.chest[i], 50);
-        }
-        chest_anim.addFrame(Assets.chest[Assets.chest.length - 1], 5000);
 
-        currentSprite = chest_anim.getImage();
+        //currentSprite = chest_anim.getImage();
 
         container = new ElementContainer(this, true);
         firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight());
         firstbutton.setGraphics(game.getGraphics());
-        UIButton second = new UIButton(container, 100, 100);
-        UIButton third = new UIButton(container, 130, 130);
-        UIButton fourth = new UIButton(container, 160, 160);
+        //UIButton second = new UIButton(container, 100, 100);
+        //UIButton third = new UIButton(container, 130, 130);
+        //UIButton fourth = new UIButton(container, 160, 160);
+
         progressScreen = new UIButton(container, 600, 0) {
             @Override
             public void Click() {
@@ -87,6 +83,9 @@ public class GameScreen extends Screen {
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
         text = new BlinkingText(firstbutton, 0, 0, "Blinking!", 50, Color.BLACK, 0.02);
+
+        UIElement chest_container = new UIElement(container, AndroidGame.width / 2 - Assets.chest[0].getWidth() / 2, 10, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
+        Chest chest = new Chest(chest_container, chest_container.getRectangle().right, chest_container.getRectangle().bottom, 150, 5000);
     }
 
     public static Background getBg1() {
@@ -200,7 +199,7 @@ public class GameScreen extends Screen {
     public void animate() {
 //        anim.update(10);
         //       hanim.update(50);
-        chest_anim.update(50);
+        //chest_anim.update(50);
     }
 
     private void nullify() {
@@ -211,7 +210,7 @@ public class GameScreen extends Screen {
         bg1 = null;
         bg2 = null;
         currentSprite = null;
-        chest_anim = null;
+        //chest_anim = null;
 
         // Call garbage collector to clean up memory.
         System.gc();
@@ -230,8 +229,8 @@ public class GameScreen extends Screen {
         Graphics g = game.getGraphics();
         container.updateAll(deltaTime, g);
 
-        g.drawImage(currentSprite, 400, 800);
-        currentSprite = chest_anim.getImage();
+        //g.drawImage(currentSprite, 400, 800);
+        //currentSprite = chest_anim.getImage();
 
         /*g.drawImage(Assets.button, 0, 285, 0, 0, 60, 60);
         g.drawImage(Assets.button, 0, 350, 0, 65, 60, 60);

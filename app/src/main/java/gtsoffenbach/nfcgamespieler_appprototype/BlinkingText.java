@@ -87,7 +87,7 @@ public class BlinkingText extends Element {
 
         getGraphics().drawString(msg,
                 getRectangle().centerX()+dad.getRectangle().centerX(),
-                getRectangle().centerY()+dad.getRectangle().centerY()+size/4,
+                getRectangle().centerY() + dad.getRectangle().centerY() + Math.round(size / 4),
                 paint);
     }
 }

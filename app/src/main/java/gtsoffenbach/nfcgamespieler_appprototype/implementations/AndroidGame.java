@@ -50,6 +50,8 @@ public class AndroidGame extends Activity implements Game {
                 switch (state) {
                     case NfcAdapter.STATE_OFF:
                         nfc.setNFCState(NfcAdapter.STATE_OFF);
+                        if (dialog != null)
+                            dialog.dismiss();
                         dialog = new NFCDialog(context, 0);                      //only used
                         break;
                     case NfcAdapter.STATE_TURNING_OFF:

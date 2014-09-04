@@ -24,20 +24,21 @@ public class MainMenuScreen extends Screen {
         button_start = new UIButton(container,104,479){
             @Override
             public void Click(){
+                super.Click();
                 goToScreenGame();
             }
         };
         button_help = new UIButton(container,104,689){
             @Override
             public void Click(){
-
+                super.Click();
             }
         };
 
         button_settings = new UIButton(container,104,899) {
                 @Override
                 public void Click () {
-
+                    super.Click();
                 }
         };
         button_start.setGraphics(game.getGraphics());

@@ -98,6 +98,7 @@ public class UIElement {
             if (visible) {
                 draw(delta);
                 for (Element element : childs) {
+                    element.setGraphics(graphics);
                     element.update(delta);
                 }
             }

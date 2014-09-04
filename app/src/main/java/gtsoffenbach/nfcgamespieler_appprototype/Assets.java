@@ -23,6 +23,9 @@ public class Assets {
         theme.setLooping(true);
         theme.setVolume(0.85f);
         theme.play();
+
+        click = game.getAudio().createSound("buttonsound.mp3");
+
     }
 
 }
