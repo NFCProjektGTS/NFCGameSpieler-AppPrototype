@@ -13,8 +13,10 @@ public class Animation {
     private int currentFrame;
     private long animTime;
     private long totalDuration;
+    private boolean endless;
+    private boolean end = false;
 
-    public Animation() {
+    public Animation(boolean endless) {
         frames = new ArrayList();
         totalDuration = 0;
 
@@ -22,6 +24,24 @@ public class Animation {
             animTime = 0;
             currentFrame = 0;
         }
+        this.end = false;
+        this.endless = endless;
+    }
+
+    public boolean isEndless() {
+        return endless;
+    }
+
+    public void setEndless(boolean endless) {
+        this.endless = endless;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 
     public synchronized void addFrame(Image image, long duration) {
@@ -30,19 +50,27 @@ public class Animation {
     }
 
     public synchronized void update(long elapsedTime) {
+        //if(endless){
         if (frames.size() > 1) {
+            this.end = false;
             animTime += elapsedTime;
             if (animTime >= totalDuration) {
                 animTime = animTime % totalDuration;
+                if (!endless) {
+                    currentFrame = frames.size() - 1;
+                } else {
                 currentFrame = 0;
+                }
+                this.end = true;
 
             }
 
             while (animTime > getFrame(currentFrame).endTime) {
-                currentFrame++;
-
+                if (!end)
+                    currentFrame++;
             }
         }
+
     }
 
     public synchronized Image getImage() {

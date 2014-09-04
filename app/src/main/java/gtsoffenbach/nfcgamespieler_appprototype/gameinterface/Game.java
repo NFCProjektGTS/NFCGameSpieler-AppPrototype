@@ -1,5 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype.gameinterface;
 
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.SaveGame;
+
 /**
  * Created by Noli on 14.07.2014.
  */
@@ -14,6 +16,10 @@ public interface Game {
     public Graphics getGraphics();
 
     public void setScreen(Screen screen);
+
+    public SaveGame getSave();
+
+    public void setSave(SaveGame save);
 
     public Screen getCurrentScreen();
 

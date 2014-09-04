@@ -36,6 +36,9 @@ public class AndroidGame extends Activity implements Game {
     Input input;
     FileIO fileIO;
     Screen screen;
+
+
+    SaveGame save;
     PowerManager.WakeLock wakeLock;
     NFC nfc;
     private NFCDialog dialog;
@@ -68,6 +71,14 @@ public class AndroidGame extends Activity implements Game {
             }
         }
     };
+
+    public SaveGame getSave() {
+        return save;
+    }
+
+    public void setSave(SaveGame save) {
+        this.save = save;
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -107,7 +118,8 @@ public class AndroidGame extends Activity implements Game {
         audio = new GameAudio(this);
         input = new GameInput(this, renderView, scaleX, scaleY);
         screen = getInitScreen();
-        nfc = new GameNFC(this);
+        nfc = new GameNFC(this, this);
+        save = new SaveGame(this);
         if (android.os.Build.VERSION.SDK_INT >= 18) {
             IntentFilter filter = new IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
             this.registerReceiver(mReceiver, filter);

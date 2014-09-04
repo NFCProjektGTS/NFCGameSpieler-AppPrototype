@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
@@ -14,6 +13,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Image;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input.TouchEvent;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
 import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.LevelUnlock;
 
 /**
  * Created by Noli on 05.08.2014.
@@ -27,14 +27,16 @@ public class GameScreen extends Screen {
     Paint paint, paint2, paint3;
     private Image currentSprite;
     //private Animation chest_anim;
-    private ArrayList tilearray = new ArrayList();
+    //private ArrayList tilearray = new ArrayList();
     private BlinkingText text;
     private ElementContainer container;
     private UIButton firstbutton;
     private UIButton progressScreen;
+    private int currentLevel;
 
     public GameScreen(final Game game, int level) {
         super(game);
+        this.currentLevel = level;
 
         // Initialize game objects here
 
@@ -66,7 +68,12 @@ public class GameScreen extends Screen {
         //currentSprite = chest_anim.getImage();
 
         container = new ElementContainer(this, true);
-        firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight());
+        firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight()) {
+            @Override
+            public void Click() {
+                LevelUnlock.unlock(game, 2);
+            }
+        };
         firstbutton.setGraphics(game.getGraphics());
         //UIButton second = new UIButton(container, 100, 100);
         //UIButton third = new UIButton(container, 130, 130);
@@ -75,17 +82,17 @@ public class GameScreen extends Screen {
         progressScreen = new UIButton(container, 600, 0) {
             @Override
             public void Click() {
-                game.setScreen(new ProgressScreen(game, 0));
+                game.setScreen(new ProgressScreen(game, 0, 0));
             }
         };
 
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
-        text = new BlinkingText(firstbutton, 0, 0, "Blinking!", 50, Color.BLACK, 0.02);
+        text = new BlinkingText(firstbutton, 0, 0, "Current Level: " + currentLevel, 50, Color.WHITE, 1);
 
         UIElement chest_container = new UIElement(container, AndroidGame.width / 2 - Assets.chest[0].getWidth() / 2, 10, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
-        Chest chest = new Chest(chest_container, chest_container.getRectangle().right, chest_container.getRectangle().bottom, 150, 5000);
+        //Chest chest = new Chest(chest_container, chest_container.getRectangle().right, chest_container.getRectangle().bottom, 150, 5000);
     }
 
     public static Background getBg1() {

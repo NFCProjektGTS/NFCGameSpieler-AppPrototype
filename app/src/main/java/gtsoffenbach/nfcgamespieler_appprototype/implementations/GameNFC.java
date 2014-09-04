@@ -22,8 +22,10 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.NFC;
  * Created by Noli on 14.07.2014.
  */
 public class GameNFC extends NFC {
+    private AndroidGame game;
 
-    GameNFC(Activity caller) {
+    GameNFC(Activity caller, AndroidGame game) {
+        this.game = game;
         this.caller = caller;
         this.mNfcAdapter = NfcAdapter.getDefaultAdapter(caller);
         checkNFC();
@@ -188,6 +190,7 @@ public class GameNFC extends NFC {
                     case OpCode.NFC_INITIAL_TAG:
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_1:
+                        LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_1);
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_2:
                         break;
@@ -204,11 +207,11 @@ public class GameNFC extends NFC {
 
 
     private abstract interface OpCode {
-        public static final int NFC_INITIAL_TAG = 0000;
-        public static final int NFC_UNLOCK_LEVEL_1 = 0001;
-        public static final int NFC_UNLOCK_LEVEL_2 = 0002;
-        public static final int NFC_UNLOCK_LEVEL_3 = 0003;
-        public static final int NFC_UNLOCK_LEVEL_4 = 0004;
+        public static final int NFC_INITIAL_TAG = 0;
+        public static final int NFC_UNLOCK_LEVEL_1 = 1;
+        public static final int NFC_UNLOCK_LEVEL_2 = 2;
+        public static final int NFC_UNLOCK_LEVEL_3 = 3;
+        public static final int NFC_UNLOCK_LEVEL_4 = 4;
 
     }
 
