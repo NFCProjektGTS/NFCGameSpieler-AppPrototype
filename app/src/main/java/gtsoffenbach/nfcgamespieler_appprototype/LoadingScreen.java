@@ -31,6 +31,8 @@ public class LoadingScreen extends Screen {
         Assets.progressBackground = g.newImage("progressscreen.png", ImageFormat.RGB565);
         Assets.helpBackground = g.newImage("helpscreen.png", ImageFormat.RGB565);
         Assets.settingsBackground = g.newImage("settingsscreen.png", ImageFormat.RGB565);
+        Assets.button_small = g.newImage("button_small.png", ImageFormat.RGB565);
+        Assets.button_small_pressed = g.newImage("button_small_pressed.png", ImageFormat.RGB565);
 
         game.getSave().loadGame();
 

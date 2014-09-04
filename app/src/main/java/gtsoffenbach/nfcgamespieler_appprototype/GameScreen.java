@@ -83,7 +83,13 @@ public class GameScreen extends Screen {
             @Override
             public void Click() {
                 game.setScreen(new ProgressScreen(game, 0, 0));
+            }@Override
+             public void draw(float delta) {
+                getGraphics().drawImage(Assets.button_small, getRectangle().left , getRectangle().top);
+
+
             }
+
         };
 
         //container.addElement(firstbutton);
