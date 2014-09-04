@@ -33,17 +33,20 @@ public class ProgressScreen extends Screen {
         this.container = new ElementContainer(this, true);
         //button = new UIButton(container, new Rect(0, 0, 800, 1280).centerX(), new Rect(0, 0, 800, 1280).centerY());
 
+
+        //TODO alle gleichrücken
+
         buttons = new UIElement[]{new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, (AndroidGame.height - Assets.button.getHeight()) / 2) {
             @Override
             public void Click() {
 
             }
-        }, new UIButton(container, 3 * (AndroidGame.width - Assets.button.getWidth() / 2), (AndroidGame.height - Assets.button.getHeight()) / 2) {
+        }, new UIButton(container, AndroidGame.width + (AndroidGame.width - Assets.button.getWidth() / 2), (AndroidGame.height - Assets.button.getHeight()) / 2) {
             @Override
             public void Click() {
 
             }
-        }, new UIButton(container, 5 * (AndroidGame.width - Assets.button.getWidth() / 2), (AndroidGame.height - Assets.button.getHeight()) / 2) {
+        }, new UIButton(container, (2 * AndroidGame.width) + (AndroidGame.width - Assets.button.getWidth() / 2), (AndroidGame.height - Assets.button.getHeight()) / 2) {
             @Override
             public void Click() {
 
@@ -116,33 +119,45 @@ public class ProgressScreen extends Screen {
                 }
                 if (event.type == Input.TouchEvent.TOUCH_UP) {
                     inMove = true;
+                    int dist = (veryfirst.x - event.x);
+                    int trigger = (AndroidGame.width - Assets.button.getWidth());
                     if (selectedLevel == 0) {
-                        if (Math.abs(veryfirst.x - event.x) >= AndroidGame.width - buttons[0].getRectangle().right) {
+                        if (dist < -trigger) {
                             //BLOCK
-                            System.out.println("BLOCK");
+                            System.out.println("BLOCK" + selectedLevel);
                         }
-                        if ((veryfirst.x - event.x) <= -(AndroidGame.width - buttons[0].getRectangle().right)) {
-                            System.out.println("NEXT");
+                        //if ((veryfirst.x - event.x) > (AndroidGame.width - buttons[0].getRectangle().right)) {
+                        if (dist > trigger) {
+
+                            System.out.println("NEXT" + selectedLevel);
                             //right
                             selectedLevel++;
+                            return;
                         }
                     }
-                    if (selectedLevel > 0) {
-                        if (Math.abs(veryfirst.x - event.x) >= AndroidGame.width - buttons[selectedLevel].getRectangle().right) {
+                    if (selectedLevel > 0 && selectedLevel < buttons.length - 1) {
+                        if (dist < -trigger) {
+                            System.out.println("Left" + selectedLevel);
                             //left
                             selectedLevel--;
+                            return;
                         }
-                        if ((veryfirst.x - event.x) <= -(AndroidGame.width - buttons[selectedLevel].getRectangle().right)) {
+                        if (dist > trigger) {
+                            System.out.println("Right" + selectedLevel);
                             //right
                             selectedLevel++;
+                            return;
                         }
                     }
-                    if (selectedLevel == buttons.length) {
-                        if (Math.abs(veryfirst.x - event.x) >= AndroidGame.width - buttons[buttons.length].getRectangle().right) {
+                    if (selectedLevel == buttons.length - 1) {
+                        if (dist < -trigger) {
+                            System.out.println("Last" + selectedLevel);
                             //left
                             selectedLevel--;
+                            return;
                         }
-                        if ((veryfirst.x - event.x) <= -(AndroidGame.width - buttons[buttons.length].getRectangle().right)) {
+                        if (dist > trigger) {
+                            System.out.println("Block" + selectedLevel);
 
                             //BLOCK
                         }
@@ -161,7 +176,7 @@ public class ProgressScreen extends Screen {
     private void updatePosZero(float deltaTime) {
         //int step = (int) Math.abs(buttons[selectedLevel].getRectangle().left)/1/deltaTime;
         int glitch = Math.abs(buttons[selectedLevel].getRectangle().left) == 0 ? 1 : Math.abs(buttons[selectedLevel].getRectangle().left);
-        int step = (int) Math.ceil(glitch / 1 / deltaTime);
+        int step = 15;//(int) Math.ceil(glitch / 1 / deltaTime);
         if (buttons[selectedLevel].getRectangle().left > (AndroidGame.width - Assets.button.getWidth()) / 2) {
             //buttons[selectedLevel].getRectangle().offsetTo(buttons[selectedLevel].getRectangle().left - step, buttons[selectedLevel].getRectangle().top);
             if (buttons[selectedLevel].getRectangle().left - step < (AndroidGame.width - Assets.button.getWidth()) / 2) {
