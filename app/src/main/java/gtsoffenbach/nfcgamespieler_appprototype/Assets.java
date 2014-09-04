@@ -10,7 +10,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
  */
 public class Assets {
 
-    public static Image menu, splash, background, progressBackground;
+    public static Image menu, splash, background, progressBackground, locked, unlocked;
     public static Image[] chest;
     public static Image button, button_pressed;
     public static Sound click, magic; //magic is a sound played when UI element is spawned with cool effect
@@ -22,7 +22,7 @@ public class Assets {
         theme = game.getAudio().createMusic("menutheme.ogg");
         theme.setLooping(true);
         theme.setVolume(0.85f);
-        theme.play();
+       //TODO theme.play();
 
         click = game.getAudio().createSound("buttonsound.mp3");
 
