@@ -93,6 +93,7 @@ public class GameScreen extends Screen {
 
         UIElement chest_container = new UIElement(container, AndroidGame.width / 2 - Assets.chest[0].getWidth() / 2, 10, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
         //Chest chest = new Chest(chest_container, chest_container.getRectangle().right, chest_container.getRectangle().bottom, 150, 5000);
+        state = GameState.Running;
     }
 
     public static Background getBg1() {
@@ -114,12 +115,15 @@ public class GameScreen extends Screen {
         // Refer to Unit 3's code. We did a similar thing without separating the
         // update methods.
 
-        if (state == GameState.Ready)
-            updateReady(touchEvents);
+
         if (state == GameState.Running)
             updateRunning(touchEvents, deltaTime);
+        /*
+        if (state == GameState.Ready)
+            updateReady(touchEvents);
+
         if (state == GameState.Paused)
-            updatePaused(touchEvents);
+            updatePaused(touchEvents);*/
     }
 
     private void updateReady(List touchEvents) {
@@ -194,12 +198,13 @@ public class GameScreen extends Screen {
         // g.drawImage(Assets.character, characterX, characterY);
 
         // Secondly, draw the UI above the game elements.
-        if (state == GameState.Ready)
+        /*if (state == GameState.Ready)
             drawReadyUI();
+
+        if (state == GameState.Paused)
+            drawPausedUI();*/
         if (state == GameState.Running)
             drawRunningUI(deltaTime);
-        if (state == GameState.Paused)
-            drawPausedUI();
 
     }
 
@@ -263,6 +268,10 @@ public class GameScreen extends Screen {
 
     }
 
+    public void back() {
+        game.setScreen(new MainMenuScreen(game));
+    }
+
     @Override
     public void resume() {
         if (state == GameState.Paused)
@@ -275,7 +284,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void backButton() {
-        pause();
+        back();
     }
 
     private void goToMenu() {

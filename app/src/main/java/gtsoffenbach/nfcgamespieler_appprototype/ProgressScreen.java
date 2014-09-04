@@ -1,5 +1,6 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.SaveGame;
  */
 public class ProgressScreen extends Screen {
     int step;
+    BlinkingText levelname;
     private int lastLevel;
     private int selectedLevel;
     private ElementContainer container;
@@ -29,6 +31,7 @@ public class ProgressScreen extends Screen {
     private boolean locked;
     private Chest chest;
     private boolean ispop;
+    private int mult = 1;
 
     public ProgressScreen(final Game game, int lastlevel, int seleted) { //NEED SELECTED LEVEL
         super(game);
@@ -40,6 +43,7 @@ public class ProgressScreen extends Screen {
             this.selectedLevel = seleted;
         }
         this.container = new ElementContainer(this, true);
+        levelname = new BlinkingText(new UIElement(container, (AndroidGame.width / 2), 50, 0, 0), 0, 0, SaveGame.levels[0].getName(), 60, Color.DKGRAY, 1);
         //button = new UIButton(container, new Rect(0, 0, 800, 1280).centerX(), new Rect(0, 0, 800, 1280).centerY());
 
 
@@ -76,6 +80,7 @@ public class ProgressScreen extends Screen {
                     }
                 });
             }
+
 
         }
 
@@ -134,6 +139,7 @@ public class ProgressScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
+        levelname.setMsg(SaveGame.levels[selectedLevel].getName());
         if (chest != null) {
             if (chest.getChest_anim().isEnd()) {
                 chest.dismiss();
