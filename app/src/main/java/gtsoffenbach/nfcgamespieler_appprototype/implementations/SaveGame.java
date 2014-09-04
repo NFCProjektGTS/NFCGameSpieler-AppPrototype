@@ -2,7 +2,6 @@ package gtsoffenbach.nfcgamespieler_appprototype.implementations;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -59,14 +58,6 @@ public class SaveGame {
                 levels[Integer.valueOf(set[0])].setUnlocked(set[1] == "1" ? true : false);
                 levels[Integer.valueOf(set[0])].setLevelnumber(Integer.valueOf(set[0]));
             }
-        }
-    }
-
-    private void createSaveGame() {
-        try {
-            new File(path).createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
