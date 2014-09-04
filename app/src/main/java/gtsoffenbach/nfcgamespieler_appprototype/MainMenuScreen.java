@@ -17,6 +17,7 @@ public class MainMenuScreen extends Screen {
     UIButton button_start,button_settings,button_help;
     BlinkingText start,help,settings;
     private ElementContainer container;
+    boolean backonce;
     private int levelselected = 0;
 
     public MainMenuScreen(Game game) {
@@ -120,6 +121,8 @@ public class MainMenuScreen extends Screen {
 
     @Override
     public void backButton() {
-        android.os.Process.killProcess(android.os.Process.myPid());
+        if(backonce) {
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }else {backonce=true;}
     }
 }
