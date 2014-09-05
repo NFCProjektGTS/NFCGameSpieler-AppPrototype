@@ -14,7 +14,6 @@ public class SaveGame {
     public static final String path = "secretfile.secret";
     public static boolean newGame = true;
     public static Level[] levels = new Level[]{new Level("Armageddon 1", 0, false), new Level("Armageddon 2", 1, false), new Level("Armageddon 3", 2, false)};
-
     private Context caller;
     private FileOutputStream fos;
     private FileInputStream fis;
@@ -24,15 +23,30 @@ public class SaveGame {
         this.caller = caller;
     }
 
+    public static boolean isNewGame() {
+        return newGame;
+    }
+
+    public static void setNewGame(boolean newGame) {
+        SaveGame.newGame = newGame;
+    }
+
     public void loadGame() {
+        /*if(newGame){
+            save();
+        }*/
+
         try {
             //fos = caller.openFileOutput(path, Context.MODE_PRIVATE);
             fis = caller.openFileInput(path);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            newGame = true;
             save();
             return;
         }
+
+
         newGame = false;
         int n;
         StringBuffer fileContent = new StringBuffer("");
@@ -85,4 +99,12 @@ public class SaveGame {
 
     }
 
+    public void delete() {
+        for (int i = 0; i < SaveGame.levels.length; i++) {
+            SaveGame.levels[i].setUnlocked(false);
+        }
+        //save();
+        caller.deleteFile(path);
+        newGame = true;
+    }
 }

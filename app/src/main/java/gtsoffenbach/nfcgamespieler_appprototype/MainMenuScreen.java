@@ -1,6 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
 import android.graphics.Color;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.SaveGame;
 public class MainMenuScreen extends Screen {
     UIButton button_start,button_settings,button_help;
     BlinkingText start,help,settings;
-    private ElementContainer container;
     boolean backonce;
+    private ElementContainer container;
     private int levelselected = 0;
 
     public MainMenuScreen(Game game) {
@@ -33,7 +34,7 @@ public class MainMenuScreen extends Screen {
         button_help = new UIButton(container,104,689){
             @Override
             public void Click(){
-
+                super.Click();
                 goToScreenHelp();
             }
         };
@@ -42,6 +43,7 @@ public class MainMenuScreen extends Screen {
                 @Override
                 public void Click ()
                 {
+                    super.Click();
                     goToScreenSettings();
                 }
         };
@@ -123,6 +125,9 @@ public class MainMenuScreen extends Screen {
     public void backButton() {
         if(backonce) {
             android.os.Process.killProcess(android.os.Process.myPid());
-        }else {backonce=true;}
+        } else {
+            Toast.makeText(game.getThiscontext(), "Erneut drücken zum Beenden!", Toast.LENGTH_SHORT);
+            backonce = true;
+        }
     }
 }

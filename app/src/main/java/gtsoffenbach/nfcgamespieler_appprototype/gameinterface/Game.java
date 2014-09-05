@@ -1,5 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype.gameinterface;
 
+import android.content.Context;
+
 import gtsoffenbach.nfcgamespieler_appprototype.implementations.SaveGame;
 
 /**
@@ -26,5 +28,7 @@ public interface Game {
     public Screen getInitScreen();
 
     public NFC getNFC();
+
+    public Context getThiscontext();
 
 }

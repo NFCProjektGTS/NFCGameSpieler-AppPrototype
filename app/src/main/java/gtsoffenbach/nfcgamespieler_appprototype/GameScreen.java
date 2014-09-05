@@ -13,7 +13,7 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Image;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Input.TouchEvent;
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
 import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
-import gtsoffenbach.nfcgamespieler_appprototype.implementations.LevelUnlock;
+import gtsoffenbach.nfcgamespieler_appprototype.implementations.SaveGame;
 
 /**
  * Created by Noli on 05.08.2014.
@@ -33,6 +33,7 @@ public class GameScreen extends Screen {
     private UIButton firstbutton;
     private UIButton progressScreen;
     private int currentLevel;
+    private BlinkingText blink;
 
     public GameScreen(final Game game, int level) {
         super(game);
@@ -71,7 +72,11 @@ public class GameScreen extends Screen {
         firstbutton = new UIButton(container, (AndroidGame.width - Assets.button.getWidth()) / 2, AndroidGame.height - Assets.button.getHeight()) {
             @Override
             public void Click() {
-                LevelUnlock.unlock(game, 2);
+                super.Click();
+                for (int i = 0; i < SaveGame.levels.length; i++) {
+                    SaveGame.levels[i].setUnlocked(true);
+                }
+                //LevelUnlock.unlock(game, 2);
             }
         };
         firstbutton.setGraphics(game.getGraphics());
@@ -79,15 +84,28 @@ public class GameScreen extends Screen {
         //UIButton third = new UIButton(container, 130, 130);
         //UIButton fourth = new UIButton(container, 160, 160);
 
-        progressScreen = new UIButton(container, 600, 0) {
+
+        blink = new BlinkingText(new UIElement(container, AndroidGame.width / 2, AndroidGame.height / 2, 2, 2), 2, 2, "Level: " + currentLevel, 80, Color.MAGENTA, 1);
+
+
+        progressScreen = new UIButton(container, 600, 10) {
             @Override
             public void Click() {
-                game.setScreen(new ProgressScreen(game, 0, 0));
-            }@Override
-             public void draw(float delta) {
-                getGraphics().drawImage(Assets.button_small, getRectangle().left , getRectangle().top);
+                super.Click();
+                game.setScreen(new ProgressScreen(game, currentLevel, currentLevel));
+            }
 
 
+            @Override
+            public void draw(float delta) {
+                if (isPressed()) {
+                    //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, 0, 0,getRectangle().width(),getRectangle().height());
+                    //getGraphics().drawImage(Assets.button,getRectangle().left,getRectangle().top, getRectangle().width(), getRectangle().height() );
+                    getGraphics().drawImage(Assets.button_small, getRectangle().left, getRectangle().top);
+                } else {
+                    //getGraphics().drawImage(Assets.button_pressed,getRectangle().left,getRectangle().top, 0, 0,getRectangle().width(),getRectangle().height());
+                    getGraphics().drawImage(Assets.button_small_pressed, getRectangle().left, getRectangle().top);
+                }
             }
 
         };
@@ -95,9 +113,9 @@ public class GameScreen extends Screen {
         //container.addElement(firstbutton);
 
         //game.getGraphics().drawString("Tap to Start.", 400, 240, paint);
-        text = new BlinkingText(firstbutton, 0, 0, "Current Level: " + currentLevel, 50, Color.WHITE, 1);
+        text = new BlinkingText(firstbutton, 0, 0, "Samplebutton", 50, Color.WHITE, 1);
 
-        UIElement chest_container = new UIElement(container, AndroidGame.width / 2 - Assets.chest[0].getWidth() / 2, 10, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
+        //UIElement chest_container = new UIElement(container, AndroidGame.width / 2 - Assets.chest[0].getWidth() / 2, 10, Assets.chest[0].getWidth(), Assets.chest[0].getHeight());
         //Chest chest = new Chest(chest_container, chest_container.getRectangle().right, chest_container.getRectangle().bottom, 150, 5000);
         state = GameState.Running;
     }

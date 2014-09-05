@@ -187,9 +187,9 @@ public class GameNFC extends NFC {
         for (NdefMessage ms : msgs) {
             for (NdefRecord rec : ms.getRecords()) {
                 switch (new BigInteger(rec.getType()).intValue()) {
-                    case OpCode.NFC_INITIAL_TAG:
-                        //not in prototype
-                        break;
+                    //case OpCode.NFC_INITIAL_TAG:
+                    //not in prototype
+                    //    break;
                     case OpCode.NFC_UNLOCK_LEVEL_1:
                         LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_1);
                         break;
@@ -200,7 +200,7 @@ public class GameNFC extends NFC {
                         LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_3);
                         break;
                     case OpCode.NFC_UNLOCK_LEVEL_4:
-                        LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_4);
+                        //LevelUnlock.unlock(game, OpCode.NFC_UNLOCK_LEVEL_4);
                         break;
                     default:
                         System.out.print("Unrecognized format");
@@ -213,11 +213,11 @@ public class GameNFC extends NFC {
 
 
     private abstract interface OpCode {
-        public static final int NFC_INITIAL_TAG = 0;
-        public static final int NFC_UNLOCK_LEVEL_1 = 1;
-        public static final int NFC_UNLOCK_LEVEL_2 = 2;
-        public static final int NFC_UNLOCK_LEVEL_3 = 3;
-        public static final int NFC_UNLOCK_LEVEL_4 = 4;
+        //public static final int NFC_INITIAL_TAG = 0;
+        public static final int NFC_UNLOCK_LEVEL_1 = 0;
+        public static final int NFC_UNLOCK_LEVEL_2 = 1;
+        public static final int NFC_UNLOCK_LEVEL_3 = 2;
+        public static final int NFC_UNLOCK_LEVEL_4 = 3;
 
     }
 

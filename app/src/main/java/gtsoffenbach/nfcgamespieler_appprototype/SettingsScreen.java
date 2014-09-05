@@ -1,5 +1,7 @@
 package gtsoffenbach.nfcgamespieler_appprototype;
 
+import android.graphics.Color;
+
 import java.util.List;
 
 import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Game;
@@ -12,8 +14,9 @@ import gtsoffenbach.nfcgamespieler_appprototype.gameinterface.Screen;
  */
 public class SettingsScreen extends Screen {
     private ElementContainer container;
-    private UIElement button_back;
-    public SettingsScreen(Game game){
+    private UIElement button_back, button_reset;
+
+    public SettingsScreen(final Game game) {
         super(game);
         container = new ElementContainer(this, true);
         button_back = new UIButton(container,104,479){
@@ -23,6 +26,17 @@ public class SettingsScreen extends Screen {
                 goToScreenMenu();
             }
         };
+        button_reset = new UIButton(container, 104, 689) {
+            @Override
+            public void Click() {
+                super.Click();
+                game.getSave().delete();
+                game.setScreen(new LoadingScreen(game));
+                //game.getSave().loadGame();
+                //game.getSave().setNewGame(true);
+            }
+        };
+        new BlinkingText(button_reset, 0, 0, "Spiel zurücksetzen", 70, Color.WHITE, 1);
     }
 
     private void goToScreenMenu() {

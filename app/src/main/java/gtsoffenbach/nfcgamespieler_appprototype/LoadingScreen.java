@@ -12,8 +12,8 @@ import gtsoffenbach.nfcgamespieler_appprototype.implementations.AndroidGame;
  */
 public class LoadingScreen extends Screen {
     public LoadingScreen(Game game) {
-
         super(game);
+        game.getSave().loadGame();
     }
 
     @Override
@@ -33,8 +33,6 @@ public class LoadingScreen extends Screen {
         Assets.settingsBackground = g.newImage("settingsscreen.png", ImageFormat.RGB565);
         Assets.button_small = g.newImage("button_small.png", ImageFormat.RGB565);
         Assets.button_small_pressed = g.newImage("button_small_pressed.png", ImageFormat.RGB565);
-
-        game.getSave().loadGame();
 
 
         //This is how you would load a sound if you had one.
